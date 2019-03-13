@@ -2,7 +2,7 @@
 /*headers*/
 #include <linux/types.h>
 
-struct mfw_rule_struct {
+struct fw_rule_struct {
     unsigned int src_ip;
     unsigned int dest_ip;
     unsigned int src_port;
