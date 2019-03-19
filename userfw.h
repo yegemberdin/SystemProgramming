@@ -9,4 +9,4 @@ struct fw_rule_struct {
     unsigned int in;
     unsigned int proto;
     char action;  //NONE=0; ADD=1; REMOVE=2; VIEW=3
-}
+};
