@@ -163,7 +163,7 @@ static ssize_t fw_dev_read(struct file *file, char *buffer, size_t length, loff_
 }
 
 
-void ip_hl_to_str(unsigned int ip, char *ip_str)
+static void ip_hl_to_str(unsigned int ip, char *ip_str)
 {
     /*convert hl to byte array first*/
     unsigned char ip_arr[4];
@@ -178,7 +178,7 @@ void ip_hl_to_str(unsigned int ip, char *ip_str)
  // The function adds a rule to either an inbound list or an outbound list.
 
 
-void print_a_rule(fw_rule* rule)
+static void print_a_rule(fw_rule* rule)
 {
     char src_ip[16], dest_ip[16];
     ip_hl_to_str(rule->src_ip, src_ip);
@@ -302,8 +302,8 @@ static int __init fw_mod_init(void)
 	       DEVICE_INTF_NAME, DEVICE_MAJOR_NUM);
 
         //register hook options
-	nf_register_hook(&fw_in_hook_ops);
-	nf_register_hook(&fw_out_hook_ops);
+	nf_register_net_hook(NULL,&fw_in_hook_ops);
+	nf_register_net_hook(NULL,&fw_out_hook_ops);
 	return 0;
 }
 
@@ -336,7 +336,7 @@ static void __exit fw_mod_cleanup(void)
 	printk(KERN_INFO "Firewall: Device %s is unregistered\n",
 	       DEVICE_INTF_NAME);
 
-	nf_unregister_hook(&fw_in_hook_ops);
-	nf_unregister_hook(&fw_out_hook_ops);
+	nf_unregister_net_hook(NULL,&fw_in_hook_ops);
+	nf_unregister_net_hook(NULL,&fw_out_hook_ops);
 }
 module_exit(fw_mod_cleanup);
